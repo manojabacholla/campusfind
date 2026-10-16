@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FindIt Campus helps students report and reunite lost belongings.">
+  <title>FindIt Campus | Lost &amp; Found</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="FindIt Campus home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" role="img">
+            <path d="M12 21s7-6.07 7-12A7 7 0 0 0 5 9c0 5.93 7 12 7 12Z"></path>
+            <circle cx="12" cy="9" r="2.4"></circle>
+          </svg>
+        </span>
+        <span>
+          <strong>FindIt</strong> Campus
+          <small>Lost something? Let’s find it.</small>
+        </span>
+      </a>
+      <button class="button button-primary header-action" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 5v14M5 12h14"></path>
+        </svg>
+        Report an Item
+      </button>
+    </header>
+
+    <main>
+      <section class="welcome-section" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow">Campus community board</p>
+          <h1 id="page-title">Good things find their way back.</h1>
+          <p class="intro">Browse recent reports or let your campus community know about an item you lost or found.</p>
+        </div>
+        <div class="welcome-note">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span><strong>Campus pulse</strong><br><span id="pulse-message">6 listings on the board</span></span>
+        </div>
+      </section>
+
+      <section class="stats-grid" aria-label="Item summary">
+        <article class="stat-card stat-lost">
+          <div class="stat-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M5 8.5h14v10H5zM8 8.5V6h8v2.5M9 13h6"></path></svg>
+          </div>
+          <div><p>Lost Items</p><strong id="lost-count">0</strong><span>Currently reported</span></div>
+        </article>
+        <article class="stat-card stat-found">
+          <div class="stat-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="m5 12 4.5 4.5L19 7"></path></svg>
+          </div>
+          <div><p>Found Items</p><strong id="found-count">0</strong><span>Currently reported</span></div>
+        </article>
+        <article class="stat-card stat-returned">
+          <div class="stat-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M18 8a7 7 0 1 0 1 7M19 4v5h-5"></path></svg>
+          </div>
+          <div><p>Returned Items</p><strong id="returned-count">0</strong><span>Reunited with owners</span></div>
+        </article>
+      </section>
+
+      <section class="content-layout">
+        <div class="listings-column">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Community listings</p>
+              <h2>Recent activity</h2>
+            </div>
+            <span class="listing-count" id="listing-count">Showing 0 items</span>
+          </div>
+
+          <div class="listing-tools">
+            <label class="search-box">
+              <span class="sr-only">Search listings</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.5"></circle><path d="m16 16 4.5 4.5"></path></svg>
+              <input id="search-input" type="search" placeholder="Search by item or location">
+            </label>
+            <div class="filter-row" aria-label="Filter by status">
+              <button class="filter-button active" type="button" data-status="All">All <span>0</span></button>
+              <button class="filter-button" type="button" data-status="Lost">Lost <span>0</span></button>
+              <button class="filter-button" type="button" data-status="Found">Found <span>0</span></button>
+              <button class="filter-button" type="button" data-status="Returned">Returned <span>0</span></button>
+            </div>
+            <label class="category-select">
+              <span class="sr-only">Filter by category</span>
+              <select id="category-filter">
+                <option>All categories</option>
+                <option>Electronics</option>
+                <option>Personal items</option>
+                <option>Study supplies</option>
+                <option>Clothing</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="listing-grid" id="listing-grid" aria-live="polite"></div>
+          <p class="empty-state" id="empty-state" hidden>No listings match your search and filters. Try changing your criteria.</p>
+        </div>
+
+        <aside class="report-panel" aria-labelledby="report-heading">
+          <div class="panel-heading">
+            <span class="panel-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg>
+            </span>
+            <div><p class="eyebrow">Help the community</p><h2 id="report-heading">Report an item</h2></div>
+          </div>
+          <p class="panel-intro">Share a few details so the right person can recognize it.</p>
+          <form id="report-form" novalidate>
+            <div class="form-message" id="form-message" role="status" aria-live="polite"></div>
+            <div class="form-group">
+              <label for="item-title">Item title</label>
+              <input id="item-title" name="item-title" type="text" placeholder="e.g. Black backpack" required>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="item-status">Status</label>
+                <select id="item-status" name="item-status" required><option value="">Choose status</option><option>Lost</option><option>Found</option></select>
+              </div>
+              <div class="form-group">
+                <label for="item-category">Category</label>
+                <select id="item-category" name="item-category" required><option value="">Choose category</option><option>Electronics</option><option>Personal items</option><option>Study supplies</option><option>Clothing</option></select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="item-location">Location</label>
+                <input id="item-location" name="item-location" type="text" placeholder="Where was it seen?" required>
+              </div>
+              <div class="form-group">
+                <label for="item-date">Date</label>
+                <input id="item-date" name="item-date" type="date" required>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="item-description">Description</label>
+              <textarea id="item-description" name="item-description" rows="3" placeholder="Add identifying details..." required></textarea>
+            </div>
+            <div class="form-actions">
+              <button class="button button-quiet" id="cancel-button" type="button">Cancel</button>
+              <button class="button button-primary" type="submit">Submit report</button>
+            </div>
+          </form>
+        </aside>
+      </section>
+    </main>
+    <footer class="site-footer"><span>FindIt Campus</span><span>Built for a more helpful campus community.</span></footer>
+  </div>
+</body>
+</html>
